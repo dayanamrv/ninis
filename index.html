@@ -76,11 +76,8 @@
 	
 	<p><h4><b>WHAT</b></h4></p>
 	<p>Los datos de la visualización provienen de una <b>Tabla</b>.  Y a continuación se describen las variables que lo conforman: </p>
-	<ul>
-	  <li>Cantidad: Ordenado, Cuantitativo Secuencial</li>
-	  <li>Género: Categórico</li>
-	  <li>Año: Ordenado, Ordinal, Cíclico </li>
-	</ul>
+	<img src="https://i.imgur.com/KWgO1Hq.png" alt="Commercial Photography"></a>
+
 	
 	<p><h4><b>WHY</b></h4></p>
 	<p>Las  tareas identificadas en la visualización son: </p>
@@ -92,19 +89,32 @@
 	</ul>
 	
 	<p><h4><b>HOW</b></h4></p>
-	<p><b>Marcas:</b></p>
+    <img src="https://i.imgur.com/QjNvuKC.png" alt="Commercial Photography"></a>
+	
+	<p><b>Encode:</b></p>
 	<ul>
-	  <li>Líneas</li>
+	  <li>Arrange
+		<ul>
+		  <li>Express: Se usa un canal de codificación espacial.  En este caso Y, para codificar visualmente las cantidades</li>
+		  <li>Align:  Los datos están alineados horizontalmente, para poder comparar y determinar diferencias entre ellos</li>
+		  <li>Separate:Los datos que representan la variable categórica “Género” , se codifican de forma separada, para poder realizar comparaciones</li>
+		</ul>
+	  </li>
+	  <li>Map</li>
+	  <ul>
+		  <li>Matiz Color: Se utiliza un matíz de color diferente para diferenciar a hombres de mujeres.</li>
+		  <li>Size:  El tamaño o distancia de la barra es utilizada para codificar la proporción de la cantidad de individuos</li>
+		</ul>
 	</ul>
-	<p><b>Canales:</b></p>
+
+	<p><b>Manipulate:</b></p>
 	<ul>
-	  <li>Posición alineada a una escala común</li>
-	  <li>Longitud</li>
-	  <li>Matiz de Color</li>
+	  <li>Navigate:  Se incluye una barra que permita al usuario  navegar entre los diferentes años de la visualización</li>
+	  <li>Select: La visualización permite seleccionar las barras, para obtener a través de un tooltip, información básica de la variable en cuestión</li>
 	</ul>
 
 	
-	<p><b>Tecnologias Utilizadas:</b></p>
+	<p><h3><b>Tecnologías usadas</b></h3></p>
 	<ul>
 	  <li>D3 V5</li>
 	  <li>Java Script</li>
