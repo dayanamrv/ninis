@@ -25,3 +25,5 @@ El objetivo principal de esta visualización es comparar la proporción de NINIS
 
 ## Autor:  
 Dayana Rojas: https://twitter.com/dayanamrv
+
+### Este proyecto se publica bajo la licencia MIT
