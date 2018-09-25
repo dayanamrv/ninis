@@ -16,6 +16,8 @@ El objetivo principal de esta visualización es comparar la proporción de NINIS
 ## Link
 https://dayanamrv.github.io/ninis/
 
+![alt text](https://i.imgur.com/n6BmW7d.png)
+
 ## Tecnologias 
 * D3 V5
 * Java Script
