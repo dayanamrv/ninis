@@ -8,11 +8,16 @@ El objetivo principal de esta visualización es comparar la proporción de NINIS
 
 ### Instrucciones:
 
-El eje y de la gráfica representa la cantidad de personas consideradas NINIS (Miles)
-El eje x de la gráfica representa el género. Hombres y Mujeres
-Al posicionar el mouse sobre cada barra, aparecerá la cantidad de individuos pertenecientes a esta nueva generación
-A continuación, se muestra una barra que el usuario podrá utilizar, para desplazarse entre los años 2008 y 2015, y descubrir como ha cambiado el tendencia de los MINIS en Colombia por cada género
+* El eje y de la gráfica representa la cantidad de personas consideradas NINIS (Miles)
+* El eje x de la gráfica representa el género. Hombres y Mujeres
+* Al posicionar el mouse sobre cada barra, aparecerá la cantidad de individuos pertenecientes a esta nueva generación
+* A continuación, se muestra una barra que el usuario podrá utilizar, para desplazarse entre los años 2008 y 2015, y descubrir como ha cambiado el tendencia de los MINIS en Colombia por cada género
 
-##
+## Tecnologias 
+* D3 V5
+* Java Script
+* HTML 5
+* CSS
 
-##
+## Autor:  
+Dayana Rojas: https://twitter.com/dayanamrv
