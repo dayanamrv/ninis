@@ -13,8 +13,7 @@ El objetivo principal de esta visualización es comparar la proporción de NINIS
 * Al posicionar el mouse sobre cada barra, aparecerá la cantidad de individuos pertenecientes a esta nueva generación
 * A continuación, se muestra una barra que el usuario podrá utilizar, para desplazarse entre los años 2008 y 2015, y descubrir como ha cambiado el tendencia de los MINIS en Colombia por cada género
 
-## Link
-https://dayanamrv.github.io/ninis/
+#### Link https://dayanamrv.github.io/ninis/
 
 ![alt text](https://i.imgur.com/n6BmW7d.png)
 
