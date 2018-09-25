@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>D3</title>
+	<style>
+		/*Slider*/
+		.slider {
+		    -webkit-appearance: none;
+		    width: 50%;
+		    height: 15px;
+		    border-radius: 5px;   
+		    background: #d3d3d3;
+		    outline: none;
+		    opacity: 0.7;
+		    -webkit-transition: .2s;
+		    transition: opacity .2s;
+		}
+
+		.slider::-webkit-slider-thumb {
+		    -webkit-appearance: none;
+		    appearance: none;
+		    width: 25px;
+		    height: 25px;
+		    border-radius: 50%; 
+		    background: #4CAF50;
+		    cursor: pointer;
+		}
+
+		.slider::-moz-range-thumb {
+		    width: 25px;
+		    height: 25px;
+		    border-radius: 50%;
+		    background: #4CAF50;
+		    cursor: pointer;
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<h1>La nueva generación:  "Los NINIS" </h1>
+	<p><b>Los NINIS: </b> La generación que ni estudia ni trabaja. </p>
+	<p> Al parecer este es un problema que afecta a países con economías inestables.  Se trata de jóvenes entre los 18 y 28 años que no están trabajando ni buscando trabajo, pero tampoco estudian. </p>
+	<p><b>Objetivo: </b> El objetivo principal de esta visualización es comparar la proporción de NINIS en Colombia según su género  (Compare features) y descubrir la tendencia de este fenómeno entre los años 2008 y 2015 ( discover trends)
+    </p>
+    <p><b>Instrucciones:</b></p>
+    <ul>
+	  <li>El eje y de la gráfica representa la cantidad de personas consideradas NINIS (Miles)</li>
+	  <li>El eje x de la gráfica representa el género. Hombres y Mujeres</li>
+	  <li>Al posicionar el mouse sobre cada barra, aparecerá la cantidad de individuos pertenecientes a esta nueva generación</li>
+	  <li>A continuación, se muestra una barra que el usuario podrá utilizar, para desplazarse entre los años 2008 y 2015, y descubrir como ha cambiado el tendencia de los MINIS en Colombia por cada género</li>
+	</ul> 
+	
+
+	<div style="text-align:center;" class="slidecontainer">
+	   <p>A&ntildeo: <span id="demo"></span></p>
+	   <input type="range" min="2008" max="2015" value="50" class="slider" id="myRange"> 	   
+	</div>
+		
+	<div style="text-align:center;">
+		<svg width = 800 height =400 id = "viz">
+		</svg>
+	</div>
+
+	<p><b>Insights:</b></p>
+	<p>La gráfica anterior muestra como esta nueva generación de NINIs, afecta en mayor medida al genero femenino, dejando la discusión abierta, para encontrar los motivos de este fenómeno y de la diferencia tan marcada entre hombres y mujeres.
+	Se podría generar la hipótesis, de que un gran porcentaje de las mujeres en Colombia son amas de casa, pero para comprobarlo, se deberían completar los datos y estudiar otras variables que no son motivos de este trabajo </p>
+	<p>Otro de los datos átipicos que se pueden observar, es que para el año 2013, la población de Hombres NINIS, en Colombia disminuye notablemente, de 132.000 individuos a 13.000.
+	En este caso, también es recomendable, completar los datos con los hechos importantes en Colombia para ese mismo año </p>
+
+	<p><b>Tecnologias Utilizadas:</b></p>
+	<ul>
+	  <li>D3 V5</li>
+	  <li>Java Script</li>
+	  <li>HTML 5 </li>
+	  <li>CSS</li>
+	</ul> 
+	<h5>Este observable se publica bajo la licencia MIT</h5>
+
+
+	<script src="http://d3js.org/d3.v5.min.js"></script>
+	<script>
+
+		//Generación de Datos
+		var  datos = [], anual_data = [], datos_filtrados = [];
+		var open_data = d3.csv("https://www.datos.gov.co/api/views/yix6-7yeh/rows.csv?accessType=DOWNLOAD");
+		
+		open_data.then(function(result) {datos = result;
+
+			anual_data = datos.filter(d => {return d.desagregacion_periodica=="Anual" && d.valor_periodica=="Anual" &&                      d.desagregacion_geografica=="Nacional" && d.desagregacion_tematica!="" });
+
+
+
+		//Filtrar datos
+		anual_data.map(function(d){if(d.año == 201){d.año = 2010;}});
+		var anio = document.getElementById("myRange").value;
+		datos_filtrados = anual_data.filter(function (d) { return d.año === anio });
+		
+		//Establecer las Escalas
+		const height = 400, width = 800,
+        margin = {left:100, right:0, top: 30, bottom:50},
+        iwidth = width - margin.left -margin.right -200,
+        iheight = height - margin.top - margin.bottom ;
+
+		const x = d3.scaleBand()
+					.domain(d3.map(datos_filtrados, d=>d.valor_tematica).keys())
+					.rangeRound([0, iwidth]).padding(0.5);
+		
+		const y = d3.scaleLinear()
+					.domain([0, d3.max(datos_filtrados, d => d.valor)])
+					.range([iheight, 0]);
+
+		const c = d3.scaleOrdinal() 
+					.domain(d3.set(datos_filtrados.map(d=> d.valor_tematica)).values())
+					.range(["6666FF", "FF66FF"]);
+
+
+		//Creando el SVG desde D3
+		var svg = d3.select("#viz");
+
+		const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`)
+
+		//Tooltip
+		let tooltip = g.append("text")
+			.attr("class", "tooltip")
+			.style("font-size", "8pt")
+			.style("font-family", "sans-serif")  
+			.style("color", "steelblue")
+			.attr("x", -100);
+
+
+ 			
+		  //Crear eje x
+		  g.append("g")
+		    .call(d3.axisBottom(x))
+		    .attr("transform", `translate(0,${iheight})`)
+		    .call(g => g.append("text")
+		          .attr("x", 250)
+		          .attr("y", 40)
+		          .attr("fill", "#000")
+		          .attr("font-size","10pt")
+		          .style("text-anchor", "middle")
+		          .text("Género"));
+		  
+		  //Crear Eje y
+		  g.append("g")
+		    .call(d3.axisLeft(y))
+		    .call(g => g.append("text")
+		        .attr("transform", "rotate(-90)")
+		        .attr("y", -70 )
+		        .attr("x",-(height-260))
+		        .attr("fill", "#000")
+		        .attr("font-size","10pt")
+		        .style("text-anchor", "middle")
+		        .text("Cantidad"));
+
+		//Crear Barras
+		crear_barras(datos_filtrados);
+
+		//Manipulación del Slider
+		var slider = document.getElementById("myRange");
+		var output = document.getElementById("demo");
+		output.innerHTML = slider.value;
+
+		slider.oninput = function() {
+		  output.innerHTML = this.value;
+		  anio = document.getElementById("myRange").value;
+		  datos_filtrados = anual_data.filter(function (d) { return d.año === anio });
+		  crear_barras(datos_filtrados);
+		}
+
+		//Función Crear Barras
+		function crear_barras(data){
+			var ps = g.selectAll("rect")
+				.data(data);
+
+			//Enter things to be created	
+			ps.enter()
+				.append("rect")
+				.attr("x", d=> x(d.valor_tematica))
+				.attr("y", d=> y(d.valor))
+				.attr("width", x.bandwidth())
+				.attr("height",d => iheight - y( d.valor ))
+				.style("fill", d=> c(d.valor_tematica) )
+				.on("mouseover", function(d) {		
+				    tooltip.attr("x", x(d.valor_tematica))
+				      .attr("y", y(d.valor) - 15)
+				      .text(`NINIs=${d.valor}.000 `)
+				      .style("border-width", "5px")
+				      .style("border-style", "solid")
+				      .style("border-color", "#555 transparent transparent transparent;*/");
+
+				  })
+				.on("mouseout", function(d, i) {
+				    d3.select(this)
+				    tooltip.text(``)
+				});
+
+			//Update things to be update	
+			ps.attr("x", d=> x(d.valor_tematica))
+				.attr("y", d=> y(d.valor))
+				.attr("width", x.bandwidth())
+				.attr("height",d => iheight - y( d.valor ))
+				.style("fill", d=> c(d.valor_tematica) );
+			
+			//Exit:  Things to be removed	
+			ps.exit();
+		}
+
+		//EL CÓDIGO VA HASTA ACÁ -------------------------------------------------------------------------------------	
+		});
+	</script>
+</body>
+</html>
